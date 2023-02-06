@@ -9,12 +9,12 @@ import UIKit
 import SnapKit
 
 protocol CellDelegate: AnyObject {
-    func cell(_ cell: Cell, data: Data)
+    func cell(_ cell: Cell, data: CoreData)
 }
 
 class Cell: UITableViewCell {
-
-    var memoData: Data? {
+    
+    var memoData: CoreData? {
         didSet { configure() }
     }
 
@@ -74,9 +74,11 @@ class Cell: UITableViewCell {
     }
     
     func configure() {
-        guard let memoData = memoData else { return }
-        memoLabel.text = memoData.text
-        dateLabel.text = memoData.date
+        guard let text = memoData?.text else { return }
+        memoLabel.text = text
+
+        guard let date = memoData?.date else { return }
+        dateLabel.text = Date.dateFormatter(date)
     }
     
     func setupUI() {

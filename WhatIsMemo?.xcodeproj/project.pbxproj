@@ -20,8 +20,8 @@
 		8F4BD9CF298767F100E90A49 /* InputTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F4BD9CE298767F100E90A49 /* InputTextView.swift */; };
 		8FEEF37C298644AB00F0F0C5 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FEEF37B298644AB00F0F0C5 /* Extension.swift */; };
 		8FEEF37E29864A3E00F0F0C5 /* PlusController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FEEF37D29864A3E00F0F0C5 /* PlusController.swift */; };
-		8FEEF3802986676500F0F0C5 /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FEEF37F2986676500F0F0C5 /* Data.swift */; };
 		8FF94F01298FBDA100A775ED /* SelectedController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FF94F00298FBDA100A775ED /* SelectedController.swift */; };
+		8FF94F07299120C900A775ED /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FF94F06299120C900A775ED /* CoreDataManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,8 +41,8 @@
 		8F4BD9CE298767F100E90A49 /* InputTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputTextView.swift; sourceTree = "<group>"; };
 		8FEEF37B298644AB00F0F0C5 /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 		8FEEF37D29864A3E00F0F0C5 /* PlusController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlusController.swift; sourceTree = "<group>"; };
-		8FEEF37F2986676500F0F0C5 /* Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
 		8FF94F00298FBDA100A775ED /* SelectedController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedController.swift; sourceTree = "<group>"; };
+		8FF94F06299120C900A775ED /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		9861D48FCC0DE3D594283B27 /* Pods_WhatIsMemo_.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WhatIsMemo_.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -108,7 +108,7 @@
 		8F37186E2983E236007C6116 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				8FEEF37F2986676500F0F0C5 /* Data.swift */,
+				8FF94F06299120C900A775ED /* CoreDataManager.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -263,11 +263,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				8F37185F2983E1A6007C6116 /* WhatIsMemo_.xcdatamodeld in Sources */,
-				8FEEF3802986676500F0F0C5 /* Data.swift in Sources */,
 				8F3718552983E1A6007C6116 /* AppDelegate.swift in Sources */,
 				8F4BD9CF298767F100E90A49 /* InputTextView.swift in Sources */,
 				8F37186C2983E1E7007C6116 /* EditController.swift in Sources */,
 				8FF94F01298FBDA100A775ED /* SelectedController.swift in Sources */,
+				8FF94F07299120C900A775ED /* CoreDataManager.swift in Sources */,
 				8F3718572983E1A6007C6116 /* SceneDelegate.swift in Sources */,
 				8F3718712983E266007C6116 /* Cell.swift in Sources */,
 				8F3718732983E495007C6116 /* MainController.swift in Sources */,

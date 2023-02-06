@@ -12,7 +12,7 @@ class SelectedController: UIViewController {
     
     var fetchText: ((String) -> Void)?
     
-    var selectedData: Data? {
+    var selectedData: CoreData? {
         didSet { configure() }
     }
     
@@ -35,25 +35,12 @@ class SelectedController: UIViewController {
     
     func setupUI() {
         view.backgroundColor = .white
-        
-        navigationItem.largeTitleDisplayMode = .never
-        navigationController?.navigationBar.tintColor = .black
-        
-        let rightBarButton = UIBarButtonItem(image: UIImage(systemName: "square.and.pencil"), style: .plain, target: self, action: #selector(rightBarButtonTapped))
-        rightBarButton.tintColor = .black
-        navigationItem.rightBarButtonItem = rightBarButton
-                
+
         view.addSubview(textLabel)
         textLabel.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide).offset(10)
             make.left.equalToSuperview().offset(10)
             make.right.equalToSuperview().offset(-10)
         }
-    }
-    
-    @objc func rightBarButtonTapped() {
-        let controller = EditController()
-        controller.editData = selectedData
-        navigationController?.pushViewController(controller, animated: true)
     }
 }

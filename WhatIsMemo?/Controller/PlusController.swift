@@ -10,8 +10,8 @@ import SnapKit
 
 class PlusController: UIViewController {
     
-    var plusCompletionButtonAction: ((Data) -> Void)?
-    
+    let dataManager = CoreDataManager.shared
+        
     private let plusMemoTextView: InputTextView = {
         let tv = InputTextView()
         tv.font = UIFont.systemFont(ofSize: 14)
@@ -44,14 +44,10 @@ class PlusController: UIViewController {
     }
     
     @objc func rightBarButtonTapped() {
-        if plusMemoTextView.text != "" {
-            guard let text = plusMemoTextView.text else { return }
-            let plusData = Data(text: text, date: Date.dateFormatter())
-            plusCompletionButtonAction?(plusData)
-
-            navigationController?.popViewController(animated: true)
-        } else {
-            navigationController?.popViewController(animated: true)
+        if let text = plusMemoTextView.text {
+            dataManager.createMemo(Text: text) {
+                self.navigationController?.popViewController(animated: true)
+            }
         }
     }
 }

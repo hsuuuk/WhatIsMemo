@@ -12,7 +12,9 @@ class EditController: UIViewController {
     
     var editCompletionButtonAction: ((Data) -> Void)?
     
-    var editData: Data? {
+    let dataManager = CoreDataManager.shared
+    
+    var editData: CoreData? {
         didSet { configure() }
     }
         
@@ -52,13 +54,12 @@ class EditController: UIViewController {
     }
     
     @objc func rightBarButtonTapped() {
-        if let text = editMemoTextView.text, text != editData?.text {
-            let data = Data(text: text, date: Date.dateFormatter())
-            editCompletionButtonAction?(data)
-            
-            navigationController?.popViewController(animated: true)
-        } else {
-            navigationController?.popViewController(animated: true)
+        if let editData = editData {
+            editData.text = editMemoTextView.text
+            editData.date = Date()
+            dataManager.updateMemo(newMemoData: editData) {
+                self.navigationController?.popViewController(animated: true)
+            }
         }
     }
 }

@@ -8,10 +8,10 @@
 import UIKit
 
 extension Date {
-    static func dateFormatter() -> String {
+    static func dateFormatter(_ date: Date) -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy.MM.dd(E)"
-        return dateFormatter.string(from: Date())
+        return dateFormatter.string(from: date)
     }
 }
 
