@@ -9,9 +9,7 @@ import UIKit
 import SnapKit
 
 class SelectedController: UIViewController {
-    
-    var fetchText: ((String) -> Void)?
-    
+        
     var selectedData: CoreData? {
         didSet { configure() }
     }
@@ -25,7 +23,6 @@ class SelectedController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setupUI()
     }
     

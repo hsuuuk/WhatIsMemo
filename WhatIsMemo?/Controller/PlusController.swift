@@ -21,7 +21,6 @@ class PlusController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setupUI()
     }
     
@@ -44,10 +43,12 @@ class PlusController: UIViewController {
     }
     
     @objc func rightBarButtonTapped() {
-        if let text = plusMemoTextView.text {
+        if let text = plusMemoTextView.text, text != "" {
             dataManager.createMemo(Text: text) {
                 self.navigationController?.popViewController(animated: true)
             }
+        } else {
+            navigationController?.popViewController(animated: true)
         }
     }
 }

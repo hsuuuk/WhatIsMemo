@@ -10,23 +10,20 @@ import SnapKit
 
 class EditController: UIViewController {
     
-    var editCompletionButtonAction: ((Data) -> Void)?
-    
     let dataManager = CoreDataManager.shared
     
     var editData: CoreData? {
         didSet { configure() }
     }
-        
+    
     private let editMemoTextView: UITextView = {
         let tv = UITextView()
         tv.font = UIFont.systemFont(ofSize: 14)
         return tv
     }()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setupUI()
     }
     
@@ -34,7 +31,7 @@ class EditController: UIViewController {
         guard let text = editData?.text else { return }
         editMemoTextView.text = text
     }
-
+    
     func setupUI() {
         view.backgroundColor = .white
         
@@ -54,11 +51,15 @@ class EditController: UIViewController {
     }
     
     @objc func rightBarButtonTapped() {
-        if let editData = editData {
-            editData.text = editMemoTextView.text
-            editData.date = Date()
-            dataManager.updateMemo(newMemoData: editData) {
-                self.navigationController?.popViewController(animated: true)
+        if let editedData = editData {
+            if let text = editMemoTextView.text, text != editData?.text {
+                editedData.text = text
+                editedData.date = Date()
+                dataManager.updateMemo(newData: editedData) {
+                    self.navigationController?.popViewController(animated: true)
+                }
+            } else {
+                navigationController?.popViewController(animated: true)
             }
         }
     }

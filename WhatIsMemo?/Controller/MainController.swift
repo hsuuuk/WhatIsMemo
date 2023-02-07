@@ -21,6 +21,7 @@ class MainController: UIViewController {
         navigationItem.title = "메모"
         navigationController?.navigationBar.prefersLargeTitles = true
         
+        dataManager.fetchMemoList()
         tableView.reloadData()
     }
     
@@ -49,7 +50,6 @@ class MainController: UIViewController {
     
     @objc func rightBarButtonTapped() {
         let controller = PlusController()
-        
         navigationController?.pushViewController(controller, animated: true)
         navigationController?.navigationBar.tintColor = .black
     }
@@ -57,12 +57,12 @@ class MainController: UIViewController {
 
 extension MainController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return dataManager.fetchMemoListFromCoreData().count
+        return dataManager.memoList.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as! Cell
-        cell.memoData = dataManager.fetchMemoListFromCoreData()[indexPath.row]
+        cell.memoData = dataManager.memoList[indexPath.row]
         cell.delegate = self
         return cell
     }
@@ -70,8 +70,9 @@ extension MainController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let delete = UIContextualAction(style: .normal, title: "") { (_, _, success: @escaping (Bool) -> Void) in
             // 원하는 액션 추가
-            let deletedMemo = self.dataManager.fetchMemoListFromCoreData()[indexPath.row]
+            let deletedMemo = self.dataManager.memoList[indexPath.row]
             self.dataManager.deleteMemo(data: deletedMemo) {
+                self.dataManager.fetchMemoList()
                 self.tableView.reloadData()
             }
             success(true)
@@ -86,7 +87,7 @@ extension MainController: UITableViewDataSource {
 extension MainController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let controller = SelectedController()
-        controller.selectedData = dataManager.fetchMemoListFromCoreData()[indexPath.row]
+        controller.selectedData = dataManager.memoList[indexPath.row]
         navigationController?.present(controller, animated: true)
     }
 }
@@ -95,7 +96,7 @@ extension MainController: CellDelegate {
     func cell(_ cell: Cell, data: CoreData) {
         let controller = EditController()
         guard let indexPath = self.tableView.indexPath(for: cell) else { return }
-        controller.editData = dataManager.fetchMemoListFromCoreData()[indexPath.row]
+        controller.editData = dataManager.memoList[indexPath.row]
         
         navigationController?.pushViewController(controller, animated: true)
     }
