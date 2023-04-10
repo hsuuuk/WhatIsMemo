@@ -14,6 +14,13 @@ class MainController: UIViewController {
     
     var tableView = UITableView()
     
+    var searchController = UISearchController()
+    var isFiltering: Bool {
+        let isActive = searchController.isActive
+        let isEmpty = searchController.searchBar.text?.isEmpty == false
+        return isActive && isEmpty
+    }
+    
     var dataManager = CoreDataManager.shared
     
     override func viewWillAppear(_ animated: Bool) {
@@ -46,6 +53,14 @@ class MainController: UIViewController {
         let rightBarButton = UIBarButtonItem(image: UIImage(systemName: "square.and.pencil"), style: .plain, target: self, action: #selector(rightBarButtonTapped))
         rightBarButton.tintColor = .black
         navigationItem.rightBarButtonItem = rightBarButton
+        
+        navigationItem.searchController = searchController
+        searchController.searchResultsUpdater = self
+        searchController.searchBar.placeholder = "검색"
+        searchController.hidesNavigationBarDuringPresentation = false
+        searchController.automaticallyShowsCancelButton = true
+        searchController.searchBar.autocapitalizationType = .none
+        navigationItem.hidesSearchBarWhenScrolling = false
     }
     
     @objc func rightBarButtonTapped() {
@@ -57,12 +72,16 @@ class MainController: UIViewController {
 
 extension MainController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return dataManager.memoList.count
+        return isFiltering ? dataManager.filteredMemoList.count : dataManager.memoList.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as! Cell
-        cell.memoData = dataManager.memoList[indexPath.row]
+        if isFiltering {
+            cell.memoData = dataManager.filteredMemoList[indexPath.row]
+        } else {
+            cell.memoData = dataManager.memoList[indexPath.row]
+        }
         cell.delegate = self
         return cell
     }
@@ -89,6 +108,7 @@ extension MainController: UITableViewDelegate {
         let controller = SelectedController()
         controller.selectedData = dataManager.memoList[indexPath.row]
         navigationController?.present(controller, animated: true)
+        tableView.deselectRow(at: indexPath, animated: true)
     }
 }
 
@@ -102,5 +122,11 @@ extension MainController: CellDelegate {
     }
 }
 
-
-
+extension MainController: UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+        guard let text = searchController.searchBar.text else { return }
+        let filter = dataManager.memoList.filter { $0.text?.lowercased().contains(text.lowercased()) ?? false }
+        dataManager.filteredMemoList = filter
+        tableView.reloadData()
+    }
+}

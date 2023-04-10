@@ -26,7 +26,7 @@ class PlusController: UIViewController {
     
     func setupUI() {
         view.backgroundColor = .white
-        
+
         navigationItem.largeTitleDisplayMode = .never
         navigationController?.navigationBar.tintColor = .black
         

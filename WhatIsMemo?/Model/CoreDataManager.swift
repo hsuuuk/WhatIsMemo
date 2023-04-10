@@ -21,6 +21,7 @@ final class CoreDataManager {
     // MARK: - [Read] 저장된 데이터 읽어오기
     
     var memoList = [CoreData]()
+    var filteredMemoList = [CoreData]()
     
     func fetchMemoList() {
         let request = NSFetchRequest<NSManagedObject>(entityName: name)
