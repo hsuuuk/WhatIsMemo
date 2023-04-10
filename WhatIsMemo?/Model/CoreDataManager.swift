@@ -21,6 +21,7 @@ final class CoreDataManager {
     // MARK: - [Read] 저장된 데이터 읽어오기
     
     var memoList = [CoreData]()
+    var fixedMemoList = [CoreData]()
     var filteredMemoList = [CoreData]()
     
     func fetchMemoList() {
@@ -31,7 +32,8 @@ final class CoreDataManager {
         guard let context = context else { return }
         do {
             guard let fetchedDataList = try context.fetch(request) as? [CoreData] else { return }
-            memoList = fetchedDataList
+            memoList = fetchedDataList.filter { $0.isFixed == false }
+            fixedMemoList = fetchedDataList.filter { $0.isFixed == true }
         } catch {
             print("Fetch Error")
         }
@@ -45,6 +47,7 @@ final class CoreDataManager {
         guard let CoreData = NSManagedObject(entity: entity, insertInto: context) as? CoreData else { return }
         CoreData.text = Text
         CoreData.date = Date()
+        CoreData.isFixed = false
         
         do {
             try context.save()

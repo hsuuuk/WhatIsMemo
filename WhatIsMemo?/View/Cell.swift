@@ -83,8 +83,8 @@ class Cell: UITableViewCell {
     func setupUI() {
         contentView.addSubview(outlineView)
         outlineView.snp.makeConstraints { make in
-            make.top.equalToSuperview()
-            make.bottom.equalToSuperview().offset(-20)
+            make.top.equalToSuperview().offset(10)
+            make.bottom.equalToSuperview().offset(-10)
             make.left.equalToSuperview().offset(20)
             make.right.equalToSuperview().offset(-20)
         }
