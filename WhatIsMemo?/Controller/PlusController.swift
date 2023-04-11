@@ -28,11 +28,13 @@ class PlusController: UIViewController {
         view.backgroundColor = .white
 
         navigationItem.largeTitleDisplayMode = .never
+        navigationController?.navigationBar.topItem?.title = "메모"
         navigationController?.navigationBar.tintColor = .black
         
         let rightBarButton = UIBarButtonItem(title: "추가", style: .plain, target: self, action: #selector(rightBarButtonTapped))
         rightBarButton.tintColor = .black
-        navigationItem.rightBarButtonItem = rightBarButton
+        let shareButton = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(shareButtonTapped))
+        navigationItem.rightBarButtonItems = [rightBarButton, shareButton]
         
         view.addSubview(plusMemoTextView)
         plusMemoTextView.snp.makeConstraints { make in
@@ -50,5 +52,12 @@ class PlusController: UIViewController {
         } else {
             navigationController?.popViewController(animated: true)
         }
+    }
+    
+    @objc func shareButtonTapped() {
+        guard let text = plusMemoTextView.text, !text.isEmpty else { return }
+        
+        let controller = UIActivityViewController(activityItems: [text], applicationActivities: nil)
+        present(controller, animated: true, completion: nil)
     }
 }

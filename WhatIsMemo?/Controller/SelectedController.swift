@@ -35,7 +35,7 @@ class SelectedController: UIViewController {
 
         view.addSubview(textLabel)
         textLabel.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide).offset(10)
+            make.top.equalTo(view.safeAreaLayoutGuide).offset(20)
             make.left.equalToSuperview().offset(10)
             make.right.equalToSuperview().offset(-10)
         }
