@@ -28,7 +28,7 @@ class PlusController: UIViewController {
         view.backgroundColor = .white
 
         navigationItem.largeTitleDisplayMode = .never
-        navigationController?.navigationBar.topItem?.title = "메모"
+        navigationController?.navigationBar.topItem?.title = ""
         navigationController?.navigationBar.tintColor = .black
         
         let rightBarButton = UIBarButtonItem(title: "추가", style: .plain, target: self, action: #selector(rightBarButtonTapped))

@@ -102,7 +102,6 @@ extension MainController: UITableViewDataSource {
                 self.dataManager.deleteMemo(data: deletedMemo) {
                     self.dataManager.fetchMemoList()
                     self.tableView.reloadData()
-                    print(self.dataManager.fixedMemoList)
                 }
                 success(true)
             } else {
@@ -110,7 +109,6 @@ extension MainController: UITableViewDataSource {
                 self.dataManager.deleteMemo(data: deletedMemo) {
                     self.dataManager.fetchMemoList()
                     self.tableView.reloadData()
-                    print(self.dataManager.fixedMemoList)
                 }
                 success(true)
             }
@@ -140,9 +138,7 @@ extension MainController: UITableViewDataSource {
             let fix = UIContextualAction(style: .normal, title: "") { (_, _, success: @escaping (Bool) -> Void) in
                 // 원하는 액션 추가
                 let fixedMemo = self.dataManager.memoList[indexPath.row]
-                print(fixedMemo)
                 fixedMemo.isFixed = true
-                print(fixedMemo)
                 self.dataManager.updateMemo(newData: fixedMemo) {
                     self.dataManager.fetchMemoList()
                     self.tableView.reloadData()
@@ -205,7 +201,8 @@ extension MainController: CellDelegate {
 extension MainController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         guard let text = searchController.searchBar.text else { return }
-        let filter = dataManager.memoList.filter { $0.text?.lowercased().contains(text.lowercased()) ?? false }
+        var filter = dataManager.fixedMemoList.filter { $0.text?.lowercased().contains(text.lowercased()) ?? false }
+        filter.append(contentsOf: dataManager.memoList.filter { $0.text?.lowercased().contains(text.lowercased()) ?? false })
         dataManager.filteredMemoList = filter
         tableView.reloadData()
     }
